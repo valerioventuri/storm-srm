@@ -17,7 +17,7 @@
       <parameter name="wsdlServiceElement" value="SRMService"/>
       <parameter name="schemaUnqualified" value="http://srm.lbl.gov/StorageResourceManager"/>
       <parameter name="wsdlServicePort" value="srm"/>
-      <parameter name="className" value="service.Service"/>
+      <parameter name="className" value="org.italiangrid.storm.srm.service.Service"/>
       <parameter name="wsdlPortType" value="ISRM"/>
       <parameter name="typeMappingVersion" value="1.1"/>
       <operation name="srmReserveSpace" qname="operNS:srmReserveSpace" xmlns:operNS="http://srm.lbl.gov/StorageResourceManager" returnQName="srmReserveSpaceResponse" returnType="rtns:srmReserveSpaceResponse" xmlns:rtns="http://srm.lbl.gov/StorageResourceManager" soapAction="" >
