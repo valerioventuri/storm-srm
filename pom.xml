@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<groupId>org.italiangrid</groupId>
 	<artifactId>storm-srm</artifactId>
 	<name>storm-srm</name>
@@ -15,9 +15,10 @@
 		<log4jVersion>1.2.17</log4jVersion>
 	</properties>
 
-	<!-- Configuration for the Axis Maven plugin. Binds to generate-sources and generates ..
-		The serverSide option is set to false. We don't want the implementation template class 
-		to be generated as we have this in the code. And we don't want the wsdd files to be generated
+	<!-- Configuration for the Axis Maven plugin. Binds to generate-sources 
+		and generates skeletons out of the provided wsdl. The serverSide option is 
+		set to false as we don't want the implementation template class to be generated 
+		as we have this in the code, and we don't want the wsdd files to be generated 
 		because Axis generates it wrong and changes were needed to make it work. -->
 	<build>
 		<plugins>
@@ -72,6 +73,12 @@
 			<groupId>axis</groupId>
 			<artifactId>axis-saaj</artifactId>
 			<version>1.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>igi.storm.backend</groupId>
+			<artifactId>xmlrpc-api</artifactId>
+			<version>0.0.16-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

@@ -81,10 +81,16 @@ import gov.lbl.srm.StorageResourceManager.SrmSuspendRequestResponse;
 import gov.lbl.srm.StorageResourceManager.SrmUpdateSpaceRequest;
 import gov.lbl.srm.StorageResourceManager.SrmUpdateSpaceResponse;
 import gov.lbl.srm.StorageResourceManager.TExtraInfo;
+import it.grid.storm.xmlrpc.ApiException;
+import it.grid.storm.xmlrpc.BackendApi;
+import it.grid.storm.xmlrpc.outputdata.PingOutputData;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.italiangrid.storm.srm.config.Configuration;
+import org.italiangrid.utils.voms.VOMSSecurityContext;
 
 
 /**
@@ -102,9 +108,62 @@ public class Service implements ISRM {
 	public SrmPingResponse srmPing(SrmPingRequest srmPingRequest)
 		throws RemoteException {
 
+		/*
+		 * instantiate the backend api
+		 */
+		
+		BackendApi core = null;
+		
+		try {
+			
+			core = new BackendApi(Configuration.INSTANCE.getBackendHost(),
+				new Long(Configuration.INSTANCE.getBackendXmlRpcPort()), 
+				Configuration.INSTANCE.getBackendXmlRpcToken());
+		
+		} catch (ApiException e) {
+			
+			throw new RemoteException("Internal error");
+		}
+
+		/*
+		 * get dn and voms info from the authn session
+		 */
+		
+		VOMSSecurityContext securityContext = VOMSSecurityContext.getCurrentContext();
+		
+		List<String> fqans = securityContext.getVOMSAttributes().get(0).getFQANs();
+		String dn = securityContext.getClientX500Name();
+		
+		/*
+		 * call backend api
+		 */
+		
+		PingOutputData pingOutputData = null;
+		
+		try {
+		
+			pingOutputData = core.ping(dn, fqans);
+		
+			// TODO this may throw a RunTimeException 
+			// that would get to the client if not caught
+			
+		} catch (IllegalArgumentException e) {
+		
+			throw new RemoteException("Internal error");
+		
+		} catch (ApiException e) {
+		
+			throw new RemoteException("Internal error");
+		}
+		
+		/*
+		 * prepare response
+		 * 
+		 */
+		
 		SrmPingResponse response = new SrmPingResponse();
 
-		response.setVersionInfo("v2.2");
+		response.setVersionInfo(pingOutputData.getBeVersion());
 
 		List<TExtraInfo> otherInfoList = new ArrayList<TExtraInfo>();
 

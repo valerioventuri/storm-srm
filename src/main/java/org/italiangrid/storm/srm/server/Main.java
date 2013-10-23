@@ -9,6 +9,7 @@ import org.eclipse.jetty.servlet.ServletHolder;
 import org.italiangrid.storm.srm.config.Configuration;
 import org.italiangrid.utils.https.SSLOptions;
 import org.italiangrid.utils.https.ServerFactory;
+import org.italiangrid.utils.voms.VOMSSecurityContextHandler;
 
 
 
@@ -69,6 +70,10 @@ public class Main {
 		Handler zeroHandler = new ZeroHandler();
 		handlers.addHandler(zeroHandler);
 
+		// voms handler
+		
+		 handlers.addHandler(new VOMSSecurityContextHandler());
+		
 		// the axis servlet for the srm service
 
 		AxisServlet axisServlet = new AxisServlet();
