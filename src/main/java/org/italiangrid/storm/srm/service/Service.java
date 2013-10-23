@@ -93,8 +93,6 @@ import org.italiangrid.utils.voms.VOMSSecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import config.Configuration;
-
 
 /**
  * Service class used by Axis to serve srm calls.

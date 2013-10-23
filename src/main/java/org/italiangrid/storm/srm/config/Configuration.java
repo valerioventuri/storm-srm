@@ -45,21 +45,6 @@ public enum Configuration {
   private String trustStore;
   
   /**
-   * The backend service host
-   */
-  private String backendHost;
-  
-  /**
-   * The backend service XML-RPC service port
-   */
-  private int backendXmlRpcPort;
-  
-  /**
-   * The backend service XML-RPC service security token
-   */
-  private String backendXmlRpcToken;
-  
-  /**
    * Default constructor. Here's where all the Typesafe config library magic
    * is done. This will throw a {@link RuntimeException} if something is wrong.
    * 
@@ -77,9 +62,6 @@ public enum Configuration {
     hostCert = config.getString("hostcert");
     hostKey = config.getString("hostkey");
     trustStore = config.getString("truststore");
-    backendHost = config.getString("be.host");
-    backendXmlRpcPort = config.getInt("be.xmlrpc.port");
-    backendXmlRpcToken = config.getString("be.xmlrpc.token");
   }
 
   /**
@@ -117,28 +99,4 @@ public enum Configuration {
     return trustStore;
   }
 	
-  /**
-   * @return the backendHost
-   */
-  public String getBackendHost() {
-	
-    return backendHost;
-  }
-	
-  /**
-   * @return the backendXmlRpcPort
-   */
-  public int getBackendXmlRpcPort() {
-	
-    return backendXmlRpcPort;
-  }
-	
-  /**
-   * @return the backendXmlRpcToken
-   */
-  public String getBackendXmlRpcToken() {
-	
-    return backendXmlRpcToken;
-  }
-
 }
