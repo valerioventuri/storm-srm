@@ -117,28 +117,28 @@ public enum Configuration {
     return trustStore;
   }
 	
-	/**
-	 * @return the backendHost
-	 */
-	public String getBackendHost() {
+  /**
+   * @return the backendHost
+   */
+  public String getBackendHost() {
 	
-		return backendHost;
-	}
+    return backendHost;
+  }
 	
-	/**
-	 * @return the backendXmlRpcPort
-	 */
-	public int getBackendXmlRpcPort() {
+  /**
+   * @return the backendXmlRpcPort
+   */
+  public int getBackendXmlRpcPort() {
 	
-		return backendXmlRpcPort;
-	}
+    return backendXmlRpcPort;
+  }
 	
-	/**
-	 * @return the backendXmlRpcToken
-	 */
-	public String getBackendXmlRpcToken() {
+  /**
+   * @return the backendXmlRpcToken
+   */
+  public String getBackendXmlRpcToken() {
 	
-		return backendXmlRpcToken;
-	}
+    return backendXmlRpcToken;
+  }
 
 }
