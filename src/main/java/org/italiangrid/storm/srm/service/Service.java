@@ -89,10 +89,11 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.italiangrid.storm.srm.config.Configuration;
 import org.italiangrid.utils.voms.VOMSSecurityContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import config.Configuration;
 
 
 /**
@@ -108,6 +109,30 @@ import org.slf4j.LoggerFactory;
 public class Service implements ISRM {
 
 	static final Logger logger = LoggerFactory.getLogger(Service.class);
+
+	/**
+	 * Interface to the backend service
+	 * 
+	 */
+	private BackendApi core;
+
+	/**
+	 * Default ctor.
+	 * 
+	 */
+	public Service() throws RuntimeException {
+
+		try {
+			
+			core = new BackendApi();
+		
+		} catch (ApiException e) {
+
+			logger.error("Cannot instantiate BackendApi class", e);
+			
+			throw new RuntimeException(e);
+		}
+	}
 	
 	public SrmPingResponse srmPing(SrmPingRequest srmPingRequest)
 		throws RemoteException {
@@ -115,26 +140,9 @@ public class Service implements ISRM {
 		logger.info("Serving ping call");
 		
 		/*
-		 * instantiate the backend api
-		 */
-		
-		BackendApi core = null;
-		
-		try {
-			
-			core = new BackendApi(Configuration.INSTANCE.getBackendHost(),
-				new Long(Configuration.INSTANCE.getBackendXmlRpcPort()), 
-				Configuration.INSTANCE.getBackendXmlRpcToken());
-		
-		} catch (ApiException e) {
-			
-			throw new RemoteException("Internal error");
-		}
-
-		/*
 		 * get dn and voms info from the authn session
 		 */
-		
+
 		VOMSSecurityContext securityContext = VOMSSecurityContext.getCurrentContext();
 		
 		List<String> fqans = securityContext.getVOMSAttributes().get(0).getFQANs();
@@ -155,15 +163,19 @@ public class Service implements ISRM {
 			
 		} catch (IllegalArgumentException e) {
 		
+			logger.error("Error calling remote ping", e);
+			
 			throw new RemoteException("Internal error");
 		
 		} catch (ApiException e) {
 		
+			logger.error("Error calling remote ping", e);
+			
 			throw new RemoteException("Internal error");
 		}
 		
 		/*
-		 * prepare response
+		 * prepare and return response
 		 * 
 		 */
 		
