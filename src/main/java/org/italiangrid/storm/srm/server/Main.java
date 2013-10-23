@@ -10,7 +10,8 @@ import org.italiangrid.storm.srm.config.Configuration;
 import org.italiangrid.utils.https.SSLOptions;
 import org.italiangrid.utils.https.ServerFactory;
 import org.italiangrid.utils.voms.VOMSSecurityContextHandler;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -21,6 +22,8 @@ import org.italiangrid.utils.voms.VOMSSecurityContextHandler;
  */
 public class Main {
 
+	static final Logger logger = LoggerFactory.getLogger(Main.class);
+	
 	/**
 	 * The Jetty Server.
 	 */
@@ -33,9 +36,13 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception {
 
+		logger.info("Starting service");
+		
 		configureServer();
 		configureHandlers();
 		server.start();
+		
+		logger.info("Service started");
 		
 	}
 

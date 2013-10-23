@@ -91,6 +91,8 @@ import java.util.List;
 
 import org.italiangrid.storm.srm.config.Configuration;
 import org.italiangrid.utils.voms.VOMSSecurityContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -105,9 +107,13 @@ import org.italiangrid.utils.voms.VOMSSecurityContext;
  */
 public class Service implements ISRM {
 
+	static final Logger logger = LoggerFactory.getLogger(Service.class);
+	
 	public SrmPingResponse srmPing(SrmPingRequest srmPingRequest)
 		throws RemoteException {
 
+		logger.info("Serving ping call");
+		
 		/*
 		 * instantiate the backend api
 		 */
